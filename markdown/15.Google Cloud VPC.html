@@ -1,0 +1,207 @@
+<!DOCTYPE html><html><head>
+      <title>15.Google Cloud VPC</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="google-cloud-vpcvirtual-private-cloud">Google Cloud VPC(Virtual Private Cloud) </h1>
+<h2 id="介紹">介紹 </h2>
+<h3 id="google-cloud-vpc">Google Cloud VPC </h3>
+<blockquote>
+<p>Google Cloud VPC 讓您可以在 Google Cloud 中佈建和管理一個虛擬網路，這個網路在邏輯上與其他虛擬網路隔離。您可以完全掌控您的 VPC 網路，包括選擇自己的 IP 位址範圍、建立子網路、設定路由和防火牆規則</p>
+</blockquote>
+<h4 id="vpc-的主要組成部分">VPC 的主要組成部分 </h4>
+<h5 id="vpc-網路-vpc-network">VPC 網路 (VPC Network) </h5>
+<blockquote>
+<p>這是 VPC 的基礎，代表一個全球性的虛擬網路。 雖然概念上是全球性的，但資源（例如虛擬機器執行個體）實際上部署在特定的區域和可用區中</p>
+</blockquote>
+<center>
+    <img src="image-77.png" alt="補充">
+</center>
+<ul>
+<li>
+<p>可以建立多個 VPC 網路，每個網路都是邏輯上隔離的</p>
+</li>
+<li>
+<p>VPC 網路本身不與任何特定區域相關聯，但子網路是區域性的</p>
+</li>
+<li>
+<p>在一個 VPC 網路中建立的資源可以相互私下通訊，只要它們在同一個 VPC 網路內，無論它們位於哪個區域</p>
+</li>
+<li>
+<p>預設情況下，新建立的 Google Cloud 組織會包含一個名為 default 的 VPC 網路。這個預設網路已經預先配置好子網路、路由和防火牆規則</p>
+</li>
+<li>
+<p>VPC Network 模式設定</p>
+<ol>
+<li>
+<p>Default<br>
+開啟 Google Cloud 的專案的時候，就會自動開啟一個 Default Network 給我們來使用，它會在每個 Region 上幫助我們配置子網路（Subnet），以及有預設的 Firewall rule\</p>
+</li>
+<li>
+<p>Auto Mode<br>
+Default VPC Network 其實就是用 Auto mode 來設置的，它幫我們在每個Region 上配置子網，預設 Subnetwork 是 /20，最多可以到 /16</p>
+</li>
+<li>
+<p>Custom Mode：這個模式就是全部自己手動設定，不會在任何 Region 配置任何網段，建議的網段是 RFC 1918 的範圍，就是一般的私有網路網段</p>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="子網路-subnet">子網路 (Subnet) </h5>
+<blockquote>
+<p>子網路是 VPC 網路內部的 IP 位址範圍分割。每個子網路都與一個特定的區域(Region)相關聯</p>
+</blockquote>
+<center>
+    <img src="image-78.png" alt="補充">
+</center>
+<p><strong>VPC 總共會保留 4 個 IP address</strong><br>
+<a href="https://cloud.google.com/vpc/docs/subnets?hl=zh-cn#reserved_ip_addresses_in_every_subnet">https://cloud.google.com/vpc/docs/subnets?hl=zh-cn#reserved_ip_addresses_in_every_subnet</a></p>
+<center>
+    <img src="image-79.png" alt="補充">
+</center>
+<ul>
+<li>必須在 VPC 網路中建立至少一個子網路才能在其中部署資源</li>
+<li>如何在VPC中切開公開資源和私有資源的差異?<br>
+=&gt; 各別建立子網路</li>
+<li>子網路定義了資源可以使用的 IP 位址範圍 (CIDR 區塊)</li>
+<li>在同一個 VPC 網路中，不同區域的子網路可以互相連線，就像在同一個實體網路的不同區段一樣</li>
+<li>不同 Region 內的資源，只要他們在同個 VPC Network 內，就可以透過內網 IP 來互相拜訪到對方</li>
+<li>公開子網才能接觸到外網，但公開子網也能和私有子網溝通</li>
+</ul>
+<h6 id="子網路類型">子網路類型 </h6>
+<ol>
+<li>
+<p>區域子網路 (Regional Subnet)<br>
+資源部署在指定的區域內，並且可以跨越該區域內的所有可用區。這是最常見的子網路類型</p>
+</li>
+<li>
+<p>舊版子網路 (Legacy Subnet)<br>
+與特定區域無關聯，屬於較舊的 VPC 網路類型，通常不建議在新專案中使用</p>
+</li>
+</ol>
+<h5 id="防火牆規則-firewall-rules">防火牆規則 (Firewall Rules) </h5>
+<blockquote>
+<p>防火牆規則控制進出 VPC 網路的流量。它們在 VPC 網路層級進行配置，並應用於該網路中的所有執行個體</p>
+</blockquote>
+<ul>
+<li>可以定義規則來允許或拒絕特定協定、埠和來源/目標 IP 範圍的流量</li>
+<li>防火牆規則是有狀態的 (Stateful)，這意味著如果允許從外部到您的執行個體的連線，則允許對應的回應流量返回外部，即使沒有明確的傳出規則允許它</li>
+<li>預設防火牆規則
+<ol>
+<li>default-allow-internal: 允許同一個 VPC 網路內執行個體之間的內部流量</li>
+<li>default-allow-ssh: 允許從任何來源到執行個體的 SSH 連線</li>
+<li>default-allow-icmp: 允許從任何來源到執行個體的 ICMP (ping) 流量</li>
+<li>default-deny-ingress: 拒絕所有來自外部的傳入流量 (除非有明確的允許規則)</li>
+<li>default-allow-egress: 允許所有從執行個體到外部的傳出流量</li>
+</ol>
+</li>
+</ul>
+<h5 id="路由-routes">路由 (Routes) </h5>
+<blockquote>
+<p>路由決定了網路流量的路徑。VPC 網路會使用路由表來決定如何將封包從一個執行個體轉發到另一個執行個體，或轉發到網際網路或其他網路</p>
+</blockquote>
+<ul>
+<li>每個 VPC 網路都有一個預設路由表，其中包含一些預設路由</li>
+<li>您可以建立自訂路由 (Custom Routes) 來覆蓋預設路由，或者添加更特定的路由規則</li>
+<li>常見路由
+<ol>
+<li>
+<p>預設網際網路路由 (Default Internet Route)<br>
+將目標為 0.0.0.0/0 (任何外部 IP 位址) 的流量路由到網際網路閘道 (Internet Gateway)。這是允許執行個體連線到網際網路的必要路由</p>
+</li>
+<li>
+<p>內部子網路路由 (Internal Subnet Route)<br>
+自動為每個子網路建立，允許同一個 VPC 網路內執行個體之間的內部流量</p>
+</li>
+<li>
+<p>自訂靜態路由 (Custom Static Route)<br>
+您手動建立的路由，可以指定下一個躍點 (例如，另一個執行個體、VPN 閘道或網際網路閘道) 和目標 IP 範圍</p>
+</li>
+<li>
+<p>自訂動態路由 (Custom Dynamic Route)<br>
+使用 Cloud Router 動態學習和發布路由，通常用於連接到內部部署網路或其他雲端網路 (例如，透過 Cloud VPN 或 Cloud Interconnect)</p>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="閘道-gateways">閘道 (Gateways) </h5>
+<blockquote>
+<p>閘道是 VPC 網路連線到外部網路的入口點</p>
+</blockquote>
+<ul>
+<li>常見閘道
+<ol>
+<li>
+<p>網際網路閘道 (Internet Gateway)<br>
+允許 VPC 網路中的執行個體連線到網際網路。執行個體需要具有外部 IP 位址才能透過網際網路閘道連線到網際網路</p>
+</li>
+<li>
+<p>Cloud VPN 閘道 (Cloud VPN Gateway)<br>
+建立 VPC 網路與內部部署網路之間的 VPN 連線。Cloud VPN 閘道是 VPN 連線的端點，它負責加密和解密 VPN 流量</p>
+</li>
+<li>
+<p>Cloud Interconnect 閘道 (Cloud Interconnect Gateway)<br>
+建立 VPC 網路與內部部署網路之間的高頻寬、低延遲的專線連線。Cloud Interconnect 閘道是專線連線的端點</p>
+</li>
+<li>
+<p>NAT 閘道 (NAT Gateway)<br>
+允許沒有外部 IP 位址的執行個體連線到網際網路。NAT 閘道會將內部 IP 位址轉換為 NAT 閘道的外部 IP 位址，使得執行個體可以發起對外連線，但無法從網際網路直接連入</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="常見使用案例">常見使用案例 </h4>
+<ul>
+<li>
+<p>託管 Web 應用程式<br>
+可以使用 VPC 來託管公開的 Web 應用程式。您可以將 Web 伺服器放在公開的子網路中，並使用防火牆規則限制對其的存取</p>
+</li>
+<li>
+<p>多層應用程式<br>
+可以使用 VPC 來建構多層應用程式，例如具有 Web 前端、應用程式伺服器和資料庫後端的應用程式。您可以將不同的層部署在不同的子網路中，並使用防火牆規則控制層之間的通訊</p>
+</li>
+<li>
+<p>擴充內部部署網路到雲端 (混合雲)<br>
+可以使用 VPC 來擴充您的內部部署網路到 Google Cloud。透過 Cloud VPN 或 Cloud Interconnect，您可以建立安全且高頻寬的連線，讓內部部署資源和雲端資源可以互相通訊</p>
+</li>
+<li>
+<p>連接不同的專案<br>
+如果您有多個 Google Cloud 專案，您可以使用 Shared VPC 或 VPC Network Peering 來安全地連接這些專案的 VPC 網路，以便資源可以跨專案互相通訊，而無需經過公網</p>
+</li>
+</ul>
+<center>
+    <img src="image-80.png" alt="補充">
+</center>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
